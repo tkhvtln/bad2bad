@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
     public SaveController ControllerSave;
     public SoundController ControllerSound;
     public PlayerController ControllerPlayer;
+    public CameraController ControllerCamera;
 
     private bool _isGame;
     private bool _isSceneLoaded;
@@ -27,6 +28,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         ControllerSave.Load();
+        ControllerCamera.Init();
         ControllerPlayer.Init();
         ControllerSound.Init();
         ControllerUI.Init();
