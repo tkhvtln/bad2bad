@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
     public static GameController Instance;
+    public static UnityEvent OnGame = new UnityEvent();
+
     public bool IsGame => _isGame;
+    public LevelController ControllerLevel { get; set; }
 
     public UIController ControllerUI;
     public SaveController ControllerSave;
@@ -40,6 +44,8 @@ public class GameController : MonoBehaviour
     {
         _isGame = true;
         ControllerUI.ShowPanelGame();
+
+        OnGame?.Invoke();
     }
 
     public void Win()
@@ -78,7 +84,8 @@ public class GameController : MonoBehaviour
             SceneManager.LoadSceneAsync(ControllerSave.DataPlayer.Level, LoadSceneMode.Additive);
         }
 
-        ControllerUI.ShowPanelMenu();
+        ControllerPlayer.ResetPlayer();
+        ControllerUI.ShowPanelMenu();     
     }
 
     private void UnloadScene()

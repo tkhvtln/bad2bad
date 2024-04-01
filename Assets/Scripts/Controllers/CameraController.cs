@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] private Transform _trTarget;
+    [SerializeField] private Vector2 _vecOffset;
 
     private Transform _transform;
 
@@ -15,6 +16,11 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        transform.position = new Vector3(_trTarget.position.x, _trTarget.position.y + 1, _transform.position.z);
+        _transform.position = new Vector3(_trTarget.position.x + _vecOffset.x, _trTarget.position.y + _vecOffset.y, _transform.position.z);
+    }
+
+    private void OnValidate()
+    {
+        transform.position = new Vector3(_trTarget.position.x + _vecOffset.x, _trTarget.position.y + _vecOffset.y, transform.position.z);
     }
 }
