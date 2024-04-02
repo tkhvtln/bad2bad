@@ -2,8 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
+using UnityEngine.EventSystems;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     #region FIELDS SERIALIZED
 
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     [Space]
     [SerializeField] private Weapon _weapon;
+    [SerializeField] private ParticleSystem _particleBlood;
 
     [Space]
     [SerializeField] private Transform _trWeapon;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [Space]
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Button _buttonFire;
+    [SerializeField] private Slider _sliderHealth;
 
     #endregion
 
@@ -34,6 +37,8 @@ public class PlayerController : MonoBehaviour
     private bool _isFire;
     private bool _isFaceLeft;
 
+    private int _health;
+
     private int _animIdle;
     private int _animWalk;  
 
@@ -45,12 +50,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!GameController.Instance.IsGame) return;
+
         Detect();
         Look();
     }
 
     private void FixedUpdate()
     {
+        if (!GameController.Instance.IsGame) return;
+
         Move();
     }
 
@@ -69,16 +78,52 @@ public class PlayerController : MonoBehaviour
         _animWalk = Animator.StringToHash(Constants.ANIM_WALK);
 
         Fire();
+        ResetPlayer();
+
         GameController.OnGame.AddListener(() => _weapon.Init());
+        GameController.OnCompleted.AddListener(() => _isFire = false);
     }
 
     public void ResetPlayer()
     {
         _isFire = false;
+        _health = _playerConfig.Health;
+        _sliderHealth.value = 1;
 
         _transform.position = Vector2.zero;
         _transform.eulerAngles = Vector2.zero;
         _trWeapon.eulerAngles = Vector2.zero;
+
+        _vecInput = Vector2.zero;
+        _rb.velocity = Vector2.zero;
+        _joystick.ResetJoystick();
+
+        gameObject.SetActive(true);
+
+        _particleBlood.transform.parent = _transform;
+        _particleBlood.transform.localPosition = Vector2.zero;
+        _particleBlood.gameObject.SetActive(false);
+
+        SetAnimation(Behavior.IDLE);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        _health -= damage;
+        _sliderHealth.value = _health * 0.01f;
+
+        if (_health <= 0)
+            Die();
+    }
+
+    private void Die()
+    {
+        _particleBlood.transform.parent = _transform.parent;
+        _particleBlood.gameObject.SetActive(true);
+
+        gameObject.SetActive(false);
+
+        GameController.Instance.Defeat();
     }
 
     private void Fire()
@@ -126,9 +171,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Flip()
-    {
+    {       
         _transform.Rotate(0, 180, 0);
         _isFaceLeft = !_isFaceLeft;
+
+        _sliderHealth.transform.eulerAngles = Vector2.right;
     }
 
     private void Aim(Vector3 vecTarget)

@@ -1,11 +1,16 @@
 using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
     #region FIELDS SERIALIZED
 
     [SerializeField] protected EnemyConfig _enemyConfig;
+
+    [Space]
+    [SerializeField] protected Slider _sliderHealth;
+    [SerializeField] protected ParticleSystem _particleBlood;
 
     #endregion
 
@@ -19,16 +24,19 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected bool _isFaceLeft;
 
-    private int _animIdle;
-    private int _animWalk;
-    private int _animAttack;
+    protected int _animIdle;
+    protected int _animWalk;
+    protected int _animAttack;
 
-    private float _offsetDistance;
+    protected float _offsetDistance;
+
 
     protected Behavior _behavior;
     protected Animator _animator;
 
-    private IntReactiveProperty _countEnemies;
+    protected IntReactiveProperty _countEnemies;
+
+    IDamageable _iDamagable;
 
     #endregion
 
@@ -70,21 +78,43 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _transform = transform;
         _countEnemies = countEnemies;
 
+        _particleBlood.gameObject.SetActive(false);
+
         _animator = GetComponent<Animator>();
         _animIdle = Animator.StringToHash(Constants.ANIM_IDLE);
         _animWalk = Animator.StringToHash(Constants.ANIM_WALK);
         _animAttack = Animator.StringToHash(Constants.ANIM_ATTACK);
+
+        GameController.OnCompleted.AddListener(() =>
+        {
+            _trTarget = null;
+            SetAnimation(Behavior.IDLE);
+        });
+    }
+
+    public void MakeDamage()
+    {
+        if (_iDamagable != null) 
+            _iDamagable.TakeDamage(_enemyConfig.Damage);
     }
 
     public void TakeDamage(int damage)
     {
         _health -= damage;
+        _sliderHealth.value = _health * 0.01f;
 
         if (_health <= 0)
-        {
-            gameObject.SetActive(false);
-            _countEnemies.Value--;
-        }
+            Die();
+    }
+
+    private void Die()
+    {
+        _countEnemies.Value--;
+
+        _particleBlood.transform.parent = transform.parent;
+        _particleBlood.gameObject.SetActive(true);
+
+        gameObject.SetActive(false);
     }
 
     private void Detect()
@@ -94,12 +124,17 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             Collider2D colliderTarget = Physics2D.OverlapCircle(_transform.position, _enemyConfig.RadiusDetect, LayerMask.GetMask(Constants.LAYER_PLAYER));
 
             if (colliderTarget != null)
+            {
                 _trTarget = colliderTarget.transform;
+                _iDamagable = _trTarget.GetComponent<IDamageable>();
+            }
         }
 
         if (_trTarget != null && (Vector2.Distance(_transform.position, _trTarget.position) > _enemyConfig.RadiusDetect))
         {
             _trTarget = null;
+            _iDamagable = null;
+
             SetAnimation(Behavior.IDLE);
         }
     }
@@ -125,7 +160,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         if (isMinDistance) return;
 
         _offsetDistance = 0.1f;
-        SetAnimation(Behavior.ATTACK);
+        SetAnimation(Behavior.ATTACK);       
     }
 
     protected void Look()
@@ -140,6 +175,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         _transform.Rotate(0, 180, 0);
         _isFaceLeft = !_isFaceLeft;
+
+        _sliderHealth.transform.eulerAngles = Vector2.right;
     }
 
     private void SetAnimation(Behavior behavior)

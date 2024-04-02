@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 
     public static GameController Instance;
     public static UnityEvent OnGame = new UnityEvent();
+    public static UnityEvent OnCompleted = new UnityEvent();
 
     #endregion
 
@@ -66,12 +67,16 @@ public class GameController : MonoBehaviour
     {
         _isGame = false;
         ControllerUI.ShowPanelWin();
+
+        OnCompleted?.Invoke();
     }
 
     public void Defeat() 
     {
         _isGame = false;
         ControllerUI.ShowPanelDefeat();
+
+        OnCompleted?.Invoke();
     }
 
     public void LoadCurrentLevel() 

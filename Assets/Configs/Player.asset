@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be3df6e2a6c09eb49ac661498e4dc0ce, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
+  Health: 100
   SpeedMove: 300
-  RadiusAttack: 5
+  RadiusAttack: 7
