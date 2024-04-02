@@ -5,6 +5,8 @@ using UniRx.Triggers;
 
 public class PlayerController : MonoBehaviour
 {
+    #region FIELDS SERIALIZED
+
     [SerializeField] private PlayerConfig _playerConfig;
 
     [Space]
@@ -17,6 +19,10 @@ public class PlayerController : MonoBehaviour
     [Space]
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Button _buttonFire;
+
+    #endregion
+
+    #region FIELDS
 
     private Transform _trEnemy;
     private Transform _transform;
@@ -32,6 +38,25 @@ public class PlayerController : MonoBehaviour
     private int _animWalk;  
 
     private Behavior _behavior;
+
+    #endregion
+
+    #region UNITY
+
+    private void Update()
+    {
+        Detect();
+        Look();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
+    }
+
+    #endregion
+
+    #region METODS
 
     public void Init()
     {
@@ -54,17 +79,6 @@ public class PlayerController : MonoBehaviour
         _transform.position = Vector2.zero;
         _transform.eulerAngles = Vector2.zero;
         _trWeapon.eulerAngles = Vector2.zero;
-    }
-
-    private void Update()
-    {
-        Detect();
-        Look();
-    }
-
-    private void FixedUpdate()
-    {
-        Move();
     }
 
     private void Fire()
@@ -163,4 +177,6 @@ public class PlayerController : MonoBehaviour
                 break;         
         }
     }
+
+    #endregion
 }

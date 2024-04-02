@@ -4,20 +4,33 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    #region STATICS
+
     public static GameController Instance;
     public static UnityEvent OnGame = new UnityEvent();
+
+    #endregion
+
+    #region GETTETS
 
     public bool IsGame => _isGame;
     public LevelController ControllerLevel { get; set; }
 
+    #endregion
+
+    #region FIELDS
+
     public UIController ControllerUI;
     public SaveController ControllerSave;
-    public SoundController ControllerSound;
     public PlayerController ControllerPlayer;
     public CameraController ControllerCamera;
 
     private bool _isGame;
     private bool _isSceneLoaded;
+
+    #endregion
+
+    #region UNITY
 
     void Awake() 
     {
@@ -32,11 +45,14 @@ public class GameController : MonoBehaviour
         ControllerSave.Load();
         ControllerCamera.Init();
         ControllerPlayer.Init();
-        ControllerSound.Init();
         ControllerUI.Init();
 
         LoadCurrentLevel();
     }
+
+    #endregion
+
+    #region METODS
 
     public void Game() 
     {
@@ -94,4 +110,6 @@ public class GameController : MonoBehaviour
             SceneManager.UnloadSceneAsync(ControllerSave.DataPlayer.Level);
         }
     }
+
+    #endregion
 }

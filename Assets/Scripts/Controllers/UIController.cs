@@ -2,10 +2,16 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
+    #region FIELD
+
     public PanelMenu PanelMenu;
     public PanelGame PanelGame;
     public PanelWin PanelWin;
     public PanelDefeat PanelDefeat;
+
+    #endregion
+
+    #region METODS
 
     public void Init() 
     {
@@ -54,11 +60,6 @@ public class UIController : MonoBehaviour
         GameController.Instance.LoadCurrentLevel();
     }
 
-    public void OnButtonSound()
-    {
-        GameController.Instance.ControllerSound.SwitchSound();
-    }
-
     public void Clear() 
     {
         PanelMenu.Hide();
@@ -66,4 +67,6 @@ public class UIController : MonoBehaviour
         PanelWin.Hide();
         PanelDefeat.Hide();
     }
+
+    #endregion
 }

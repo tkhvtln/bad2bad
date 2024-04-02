@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class SaveController : MonoBehaviour
 {
+    #region FIELDS
+
     public Data DataPlayer;
+
+    #endregion
+
+    #region METODS
 
     public void Save()
     {
@@ -28,16 +34,6 @@ public class SaveController : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-}
 
-public class Data
-{
-    public bool IsSound;
-    public int Level;
-
-    public Data()
-    {
-        IsSound = true;
-        Level = 1;
-    }
+    #endregion
 }

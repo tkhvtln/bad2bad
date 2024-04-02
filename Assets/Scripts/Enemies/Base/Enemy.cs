@@ -3,7 +3,13 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
+    #region FIELDS SERIALIZED
+
     [SerializeField] protected EnemyConfig _enemyConfig;
+
+    #endregion
+
+    #region FIELDS
 
     protected int _health;
     protected int _damage;
@@ -24,6 +30,36 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private IntReactiveProperty _countEnemies;
 
+    #endregion
+
+    #region UNITY
+
+    private void Update()
+    {
+        if (!GameController.Instance.IsGame) return;
+
+        Detect();
+
+        if (_trTarget == null) return;
+
+        Move();
+        Look();
+        Attack();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusAttack);
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusDetect);
+    }
+
+    #endregion
+
+    #region METODS
+
     public void Init(IntReactiveProperty countEnemies)
     {
         _isFaceLeft = false;
@@ -38,19 +74,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _animIdle = Animator.StringToHash(Constants.ANIM_IDLE);
         _animWalk = Animator.StringToHash(Constants.ANIM_WALK);
         _animAttack = Animator.StringToHash(Constants.ANIM_ATTACK);
-    }
-
-    private void Update()
-    {
-        if (!GameController.Instance.IsGame) return;
-
-        Detect();
-
-        if (_trTarget == null) return;
-
-        Move();
-        Look();
-        Attack();
     }
 
     public void TakeDamage(int damage)
@@ -141,12 +164,5 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusAttack);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusDetect);
-    }
+    #endregion
 }
