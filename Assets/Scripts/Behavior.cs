@@ -1,5 +1,6 @@
 public enum Behavior
 {
     IDLE,
-    WALK
+    WALK,
+    ATTACK
 }
