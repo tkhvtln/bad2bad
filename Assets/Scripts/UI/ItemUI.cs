@@ -17,13 +17,13 @@ public class ItemUI : MonoBehaviour
     {
         ItemSlot = itemSlot;
 
-        //_icon.sprite = itemSlot.Icon;
-        _count.text = $"{itemSlot.id}/{itemSlot.count}";
+        _icon.sprite = SpriteData.ToSprite(itemSlot.icon);
+        _count.text = $"{itemSlot.count}";
     }
 
     public void Clear()
     {
-        //_icon.sprite = null;
+        _icon.sprite = null;
         _count.text = "";
     }
 
