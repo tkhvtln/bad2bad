@@ -2,16 +2,11 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    #region FIELD
-
     public PanelMenu PanelMenu;
     public PanelGame PanelGame;
     public PanelWin PanelWin;
     public PanelDefeat PanelDefeat;
-
-    #endregion
-
-    #region METODS
+    public PanelInventory PanelInventory;
 
     public void Init() 
     {
@@ -19,6 +14,7 @@ public class UIController : MonoBehaviour
         PanelGame.Init();
         PanelWin.Init();
         PanelDefeat.Init();
+        PanelInventory.Init();
     }
 
     public void ShowPanelMenu() 
@@ -45,6 +41,12 @@ public class UIController : MonoBehaviour
         PanelDefeat.Show();
     }
 
+    public void ShowPanelInventory() 
+    {
+        Clear();
+        PanelInventory.Show();
+    }
+
     public void OnButtonPlay() 
     {
         GameController.Instance.Game();
@@ -60,13 +62,29 @@ public class UIController : MonoBehaviour
         GameController.Instance.LoadCurrentLevel();
     }
 
+    public void OnButtonInventory()
+    {
+        Time.timeScale = 0;
+        ShowPanelInventory();
+    }
+
+    public void OnButtonExitInventory()
+    {
+        Time.timeScale = 1;
+        ShowPanelGame();
+    }
+
+    public void OnButtonThrowItem()
+    {
+        PanelInventory.ThrowItem();
+    }
+
     public void Clear() 
     {
         PanelMenu.Hide();
         PanelGame.Hide();
         PanelWin.Hide();
         PanelDefeat.Hide();
+        PanelInventory.Hide();
     }
-
-    #endregion
 }

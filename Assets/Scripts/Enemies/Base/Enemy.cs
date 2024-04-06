@@ -1,20 +1,15 @@
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
-    #region FIELDS SERIALIZED
-
     [SerializeField] protected EnemyConfig _enemyConfig;
 
     [Space]
     [SerializeField] protected Slider _sliderHealth;
     [SerializeField] protected ParticleSystem _particleBlood;
-
-    #endregion
-
-    #region FIELDS
 
     protected int _health;
     protected int _damage;
@@ -30,17 +25,13 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected float _offsetDistance;
 
-
-    protected Behavior _behavior;
+    protected Item _item;
     protected Animator _animator;
-
+    protected Behavior _behavior;
+    
     protected IntReactiveProperty _countEnemies;
 
     IDamageable _iDamagable;
-
-    #endregion
-
-    #region UNITY
 
     private void Update()
     {
@@ -64,10 +55,6 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusDetect);
     }
 
-    #endregion
-
-    #region METODS
-
     public void Init(IntReactiveProperty countEnemies)
     {
         _isFaceLeft = false;
@@ -84,6 +71,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _animIdle = Animator.StringToHash(Constants.ANIM_IDLE);
         _animWalk = Animator.StringToHash(Constants.ANIM_WALK);
         _animAttack = Animator.StringToHash(Constants.ANIM_ATTACK);
+
+        int itemIndex = Random.Range(0, _enemyConfig.ItemList.Count);
+        _item = Instantiate(_enemyConfig.ItemList[itemIndex], _transform);
+        _item.gameObject.SetActive(false);
 
         GameController.OnCompleted.AddListener(() =>
         {
@@ -113,6 +104,9 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
         _particleBlood.transform.parent = transform.parent;
         _particleBlood.gameObject.SetActive(true);
+
+        _item.transform.parent = transform.parent;
+        _item.gameObject.SetActive(true);
 
         gameObject.SetActive(false);
     }
@@ -200,6 +194,4 @@ public abstract class Enemy : MonoBehaviour, IDamageable
                 break;
         }
     }
-
-    #endregion
 }

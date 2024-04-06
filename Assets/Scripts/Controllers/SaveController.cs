@@ -2,13 +2,7 @@ using UnityEngine;
 
 public class SaveController : MonoBehaviour
 {
-    #region FIELDS
-
     public Data DataPlayer;
-
-    #endregion
-
-    #region METODS
 
     public void Save()
     {
@@ -25,7 +19,7 @@ public class SaveController : MonoBehaviour
         }
         else
         {
-            DataPlayer = new Data();
+            //DataPlayer = new Data();
         }
     }
 
@@ -34,6 +28,4 @@ public class SaveController : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
     }
-
-    #endregion
 }

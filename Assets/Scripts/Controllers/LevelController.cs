@@ -3,13 +3,9 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    #region FIELDS SERIALIZED
-
     [SerializeField] private Transform _trEnemies;
 
-    #endregion
-
-    #region UNITY
+    private IntReactiveProperty _countEnemies;
 
     void Start()
     {
@@ -20,13 +16,5 @@ public class LevelController : MonoBehaviour
 
         foreach (Transform tr in _trEnemies)
             tr.GetComponent<Enemy>().Init(_countEnemies);
-    }
-
-    #endregion
-
-    #region FIELDS
-
-    private IntReactiveProperty _countEnemies;
-
-    #endregion
+    }  
 }

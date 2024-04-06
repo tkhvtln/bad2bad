@@ -5,21 +5,11 @@ using Object = UnityEngine.Object;
 
 public class ObjectPool<T> where T : MonoBehaviour
 {
-    #region GETTERS
-
     public T Prefab { get; }
     public bool AutoExpand { get; set; }
     public Transform Container { get; }
 
-    #endregion
-
-    #region FIELDS
-
     public List<T> Pool;
-
-    #endregion
-
-    #region METODS
 
     public ObjectPool(T prefab, int count, Transform container, bool autoExpand)
     {
@@ -70,6 +60,4 @@ public class ObjectPool<T> where T : MonoBehaviour
 
         throw new Exception($"There is no free elements in pool of type {typeof(T)}");
     }
-
-    #endregion
 }

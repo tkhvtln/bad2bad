@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb2627a56e3c4d4184a0ba2b0c8f25b, type: 3}
+  m_Name: BulletproofCloakWrist
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 21300000, guid: d600aafa82fce564aace99c7b1556caa, type: 3}
+  ID: 3
+  Count: 1

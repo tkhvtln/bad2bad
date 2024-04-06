@@ -6,8 +6,6 @@ using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
-    #region FIELDS SERIALIZED
-
     [SerializeField] private PlayerConfig _playerConfig;
 
     [Space]
@@ -22,10 +20,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private Joystick _joystick;
     [SerializeField] private Button _buttonFire;
     [SerializeField] private Slider _sliderHealth;
-
-    #endregion
-
-    #region FIELDS
 
     private Transform _trEnemy;
     private Transform _transform;
@@ -44,10 +38,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private Behavior _behavior;
 
-    #endregion
-
-    #region UNITY
-
     private void Update()
     {
         if (!GameController.Instance.IsGame) return;
@@ -62,10 +52,6 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         Move();
     }
-
-    #endregion
-
-    #region METODS
 
     public void Init()
     {
@@ -224,6 +210,4 @@ public class PlayerController : MonoBehaviour, IDamageable
                 break;         
         }
     }
-
-    #endregion
 }

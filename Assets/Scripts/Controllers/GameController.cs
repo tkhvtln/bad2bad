@@ -4,34 +4,22 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    #region STATICS
-
     public static GameController Instance;
     public static UnityEvent OnGame = new UnityEvent();
     public static UnityEvent OnCompleted = new UnityEvent();
 
-    #endregion
-
-    #region GETTETS
-
-    public bool IsGame => _isGame;
+    public bool IsGame { get; private set; }
+    public Data Data { get; set; }
     public LevelController ControllerLevel { get; set; }
-
-    #endregion
-
-    #region FIELDS
 
     public UIController ControllerUI;
     public SaveController ControllerSave;
     public PlayerController ControllerPlayer;
-    public CameraController ControllerCamera;
 
-    private bool _isGame;
+    [Space]
+    [SerializeField] private Inventory _inventory;
+
     private bool _isSceneLoaded;
-
-    #endregion
-
-    #region UNITY
 
     void Awake() 
     {
@@ -43,21 +31,20 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        ControllerSave.Load();
-        ControllerCamera.Init();
-        ControllerPlayer.Init();
+        Data = SaveSystem.Load();
+
+        //ControllerSave.Load();
         ControllerUI.Init();
+        ControllerPlayer.Init();
+
+        _inventory.Init(Data);
 
         LoadCurrentLevel();
     }
 
-    #endregion
-
-    #region METODS
-
     public void Game() 
     {
-        _isGame = true;
+        IsGame = true;
         ControllerUI.ShowPanelGame();
 
         OnGame?.Invoke();
@@ -65,7 +52,7 @@ public class GameController : MonoBehaviour
 
     public void Win()
     {
-        _isGame = false;
+        IsGame = false;
         ControllerUI.ShowPanelWin();
 
         OnCompleted?.Invoke();
@@ -73,7 +60,7 @@ public class GameController : MonoBehaviour
 
     public void Defeat() 
     {
-        _isGame = false;
+        IsGame = false;
         ControllerUI.ShowPanelDefeat();
 
         OnCompleted?.Invoke();
@@ -89,8 +76,10 @@ public class GameController : MonoBehaviour
     {
         UnloadScene();
 
-        ControllerSave.DataPlayer.Level = ++ControllerSave.DataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : ControllerSave.DataPlayer.Level;
-        ControllerSave.Save();
+        //ControllerSave.DataPlayer.Level = ++ControllerSave.DataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : ControllerSave.DataPlayer.Level;
+        //ControllerSave.Save();
+        Data.Level = ++ControllerSave.DataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : ControllerSave.DataPlayer.Level;
+        SaveSystem.Save(Data);
 
         LoadScene();
     }
@@ -100,7 +89,8 @@ public class GameController : MonoBehaviour
         if (!_isSceneLoaded)
         {
             _isSceneLoaded = true;
-            SceneManager.LoadSceneAsync(ControllerSave.DataPlayer.Level, LoadSceneMode.Additive);
+            //SceneManager.LoadSceneAsync(ControllerSave.DataPlayer.Level, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(Data.Level, LoadSceneMode.Additive);
         }
 
         ControllerPlayer.ResetPlayer();
@@ -112,9 +102,8 @@ public class GameController : MonoBehaviour
         if (_isSceneLoaded)
         {
             _isSceneLoaded = false;
-            SceneManager.UnloadSceneAsync(ControllerSave.DataPlayer.Level);
+            //SceneManager.UnloadSceneAsync(ControllerSave.DataPlayer.Level);
+            SceneManager.UnloadSceneAsync(Data.Level);
         }
     }
-
-    #endregion
 }
