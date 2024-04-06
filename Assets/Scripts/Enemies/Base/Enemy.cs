@@ -35,7 +35,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (!GameController.Instance.IsGame) return;
+        if (!GameController.instance.isGame) return;
 
         Detect();
 
@@ -76,7 +76,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _item = Instantiate(_enemyConfig.ItemList[itemIndex], _transform);
         _item.gameObject.SetActive(false);
 
-        GameController.OnCompleted.AddListener(() =>
+        GameController.onCompleted.AddListener(() =>
         {
             _trTarget = null;
             SetAnimation(Behavior.IDLE);

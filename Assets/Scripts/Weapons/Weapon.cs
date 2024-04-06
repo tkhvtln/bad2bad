@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour
 {
-    public int RateOfFire => _weaponConfig.RateOfFire;
+    public int rateOfFire => _weaponConfig.RateOfFire;
 
     [SerializeField] protected WeaponConfig _weaponConfig;
     [SerializeField] protected Transform _trSpawnerBullet;
@@ -11,8 +11,8 @@ public abstract class Weapon : MonoBehaviour
 
     public void Init()
     {
-        _objectPool = new ObjectPool<Bullet>(_weaponConfig.BulletData.BulletPrefab, 20, GameController.Instance.ControllerLevel.transform, true);
-        foreach (Bullet bullet in _objectPool.Pool)
+        _objectPool = new ObjectPool<Bullet>(_weaponConfig.BulletData.BulletPrefab, 20, GameController.instance.ControllerLevel.transform, true);
+        foreach (Bullet bullet in _objectPool.pool)
             bullet.Init();
     }
 

@@ -2,64 +2,64 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    public PanelMenu PanelMenu;
-    public PanelGame PanelGame;
-    public PanelWin PanelWin;
-    public PanelDefeat PanelDefeat;
-    public PanelInventory PanelInventory;
+    public PanelMenu panelMenu;
+    public PanelGame panelGame;
+    public PanelWin panelWin;
+    public PanelDefeat panelDefeat;
+    public PanelInventory panelInventory;
 
     public void Init() 
     {
-        PanelMenu.Init();
-        PanelGame.Init();
-        PanelWin.Init();
-        PanelDefeat.Init();
-        PanelInventory.Init();
+        panelMenu.Init();
+        panelGame.Init();
+        panelWin.Init();
+        panelDefeat.Init();
+        panelInventory.Init();
     }
 
     public void ShowPanelMenu() 
     {
         Clear();
-        PanelMenu.Show();
+        panelMenu.Show();
     }
 
     public void ShowPanelGame() 
     {
         Clear();
-        PanelGame.Show();
+        panelGame.Show();
     }
 
     public void ShowPanelWin() 
     {
         Clear();
-        PanelWin.Show();
+        panelWin.Show();
     }
 
     public void ShowPanelDefeat() 
     {
         Clear();
-        PanelDefeat.Show();
+        panelDefeat.Show();
     }
 
     public void ShowPanelInventory() 
     {
         Clear();
-        PanelInventory.Show();
+        panelInventory.Show();
     }
 
     public void OnButtonPlay() 
     {
-        GameController.Instance.Game();
+        GameController.instance.Game();
     }
 
     public void OnButtonNextLevel() 
     {
-        GameController.Instance.LoadNextLevel();
+        GameController.instance.LoadNextLevel();
     }
 
     public void OnButtonRestartLevel() 
     {
-        GameController.Instance.LoadCurrentLevel();
+        GameController.instance.LoadCurrentLevel();
     }
 
     public void OnButtonInventory()
@@ -76,15 +76,15 @@ public class UIController : MonoBehaviour
 
     public void OnButtonThrowItem()
     {
-        PanelInventory.ThrowItem();
+        panelInventory.ThrowItem();
     }
 
     public void Clear() 
     {
-        PanelMenu.Hide();
-        PanelGame.Hide();
-        PanelWin.Hide();
-        PanelDefeat.Hide();
-        PanelInventory.Hide();
+        panelMenu.Hide();
+        panelGame.Hide();
+        panelWin.Hide();
+        panelDefeat.Hide();
+        panelInventory.Hide();
     }
 }

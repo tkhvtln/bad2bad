@@ -4,17 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController Instance;
-    public static UnityEvent OnGame = new UnityEvent();
-    public static UnityEvent OnCompleted = new UnityEvent();
+    public static GameController instance;
+    public static UnityEvent onGame = new UnityEvent();
+    public static UnityEvent onCompleted = new UnityEvent();
 
-    public bool IsGame { get; private set; }
-    public Data Data { get; set; }
+    public bool isGame { get; private set; }
+    public Data data { get; set; }
     public LevelController ControllerLevel { get; set; }
 
-    public UIController ControllerUI;
-    public SaveController ControllerSave;
-    public PlayerController ControllerPlayer;
+    public UIController uiController;
+    public SaveController saveController;
+    public PlayerController playerController;
 
     [Space]
     [SerializeField] private Inventory _inventory;
@@ -23,47 +23,47 @@ public class GameController : MonoBehaviour
 
     void Awake() 
     {
-        if (Instance == null)
-            Instance = this;
+        if (instance == null)
+            instance = this;
         else
             Destroy(this);
     }
 
     void Start()
     {
-        Data = SaveSystem.Load();
+        data = SaveSystem.Load();
 
-        //ControllerSave.Load();
-        ControllerUI.Init();
-        ControllerPlayer.Init();
+        //saveController.Load();
+        uiController.Init();
+        playerController.Init();
 
-        _inventory.Init(Data);
+        _inventory.Init(data);
 
         LoadCurrentLevel();
     }
 
     public void Game() 
     {
-        IsGame = true;
-        ControllerUI.ShowPanelGame();
+        isGame = true;
+        uiController.ShowPanelGame();
 
-        OnGame?.Invoke();
+        onGame?.Invoke();
     }
 
     public void Win()
     {
-        IsGame = false;
-        ControllerUI.ShowPanelWin();
+        isGame = false;
+        uiController.ShowPanelWin();
 
-        OnCompleted?.Invoke();
+        onCompleted?.Invoke();
     }
 
     public void Defeat() 
     {
-        IsGame = false;
-        ControllerUI.ShowPanelDefeat();
+        isGame = false;
+        uiController.ShowPanelDefeat();
 
-        OnCompleted?.Invoke();
+        onCompleted?.Invoke();
     }
 
     public void LoadCurrentLevel() 
@@ -76,10 +76,10 @@ public class GameController : MonoBehaviour
     {
         UnloadScene();
 
-        //ControllerSave.DataPlayer.Level = ++ControllerSave.DataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : ControllerSave.DataPlayer.Level;
-        //ControllerSave.Save();
-        Data.Level = ++ControllerSave.DataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : ControllerSave.DataPlayer.Level;
-        SaveSystem.Save(Data);
+        //saveController.dataPlayer.Level = ++saveController.dataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : saveController.dataPlayer.Level;
+        //saveController.Save();
+        data.level = ++data.level >= SceneManager.sceneCountInBuildSettings ? 1 : data.level;
+        SaveSystem.Save(data);
 
         LoadScene();
     }
@@ -89,12 +89,12 @@ public class GameController : MonoBehaviour
         if (!_isSceneLoaded)
         {
             _isSceneLoaded = true;
-            //SceneManager.LoadSceneAsync(ControllerSave.DataPlayer.Level, LoadSceneMode.Additive);
-            SceneManager.LoadSceneAsync(Data.Level, LoadSceneMode.Additive);
+            //SceneManager.LoadSceneAsync(saveController.dataPlayer.Level, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(data.level, LoadSceneMode.Additive);
         }
 
-        ControllerPlayer.ResetPlayer();
-        ControllerUI.ShowPanelMenu();     
+        playerController.ResetPlayer();
+        uiController.ShowPanelMenu();     
     }
 
     private void UnloadScene()
@@ -102,8 +102,8 @@ public class GameController : MonoBehaviour
         if (_isSceneLoaded)
         {
             _isSceneLoaded = false;
-            //SceneManager.UnloadSceneAsync(ControllerSave.DataPlayer.Level);
-            SceneManager.UnloadSceneAsync(Data.Level);
+            //SceneManager.UnloadSceneAsync(saveController.dataPlayer.Level);
+            SceneManager.UnloadSceneAsync(data.level);
         }
     }
 }

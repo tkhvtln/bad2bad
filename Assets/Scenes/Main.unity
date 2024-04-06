@@ -1602,9 +1602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1487f09dc0fd4244c857a45d619ded71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControllerUI: {fileID: 1067475389}
-  ControllerSave: {fileID: 1100087254}
-  ControllerPlayer: {fileID: 774936761}
+  uiController: {fileID: 1067475389}
+  saveController: {fileID: 1100087254}
+  playerController: {fileID: 774936761}
   _inventory: {fileID: 1161483648}
 --- !u!1 &648522476
 GameObject:
@@ -2889,11 +2889,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0896fd56a24fe5a4bab511b577f65833, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanelMenu: {fileID: 1576435324}
-  PanelGame: {fileID: 754372624}
-  PanelWin: {fileID: 794418302}
-  PanelDefeat: {fileID: 142701996}
-  PanelInventory: {fileID: 648522480}
+  panelMenu: {fileID: 1576435324}
+  panelGame: {fileID: 754372624}
+  panelWin: {fileID: 794418302}
+  panelDefeat: {fileID: 142701996}
+  panelInventory: {fileID: 648522480}
 --- !u!1 &1100087253
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,21 +2923,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a86848186defc914eb5291394d2b5268, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DataPlayer:
-    Level: 1
-    ItemSlots:
-    - ID: 0
-      Count: 0
-    - ID: 0
-      Count: 0
-    - ID: 0
-      Count: 0
-    - ID: 0
-      Count: 0
-    - ID: 0
-      Count: 0
-    - ID: 0
-      Count: 0
+  data:
+    level: 1
+    itemSlots: []
 --- !u!4 &1100087255
 Transform:
   m_ObjectHideFlags: 0

@@ -10,16 +10,16 @@ public class PanelInventory : MonoBehaviour
     [Space]
     [SerializeField] private List<ItemUI> _itemsUI;
 
-    public int IndexItemSelected { get; set; }
+    public int indexItemSelected { get; set; }
 
     public void Init()
     {
         _btnThrow.gameObject.SetActive(false);
 
-        Inventory.OnInventory.AddListener(Refresh);
-        ItemUI.OnSelect.AddListener((index, isSlot) =>
+        Inventory.onInventory.AddListener(Refresh);
+        ItemUI.onSelect.AddListener((index, isSlot) =>
         {
-            IndexItemSelected = index;
+            indexItemSelected = index;
             foreach (var itemUI in _itemsUI)
                 itemUI.Unselect();
 
@@ -49,7 +49,7 @@ public class PanelInventory : MonoBehaviour
     public void ThrowItem()
     {
         _btnThrow.gameObject.SetActive(false);
-        _inventory.RemoveItem(IndexItemSelected);
-        _itemsUI[IndexItemSelected].ItemSlot = null;
+        _inventory.RemoveItem(indexItemSelected);
+        _itemsUI[indexItemSelected].ItemSlot = null;
     }
 }

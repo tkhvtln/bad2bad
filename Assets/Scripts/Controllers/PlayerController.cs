@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (!GameController.Instance.IsGame) return;
+        if (!GameController.instance.isGame) return;
 
         Detect();
         Look();
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if (!GameController.Instance.IsGame) return;
+        if (!GameController.instance.isGame) return;
 
         Move();
     }
@@ -66,8 +66,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         Fire();
         ResetPlayer();
 
-        GameController.OnGame.AddListener(() => _weapon.Init());
-        GameController.OnCompleted.AddListener(() => _isFire = false);
+        GameController.onGame.AddListener(() => _weapon.Init());
+        GameController.onCompleted.AddListener(() => _isFire = false);
     }
 
     public void ResetPlayer()
@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         gameObject.SetActive(false);
 
-        GameController.Instance.Defeat();
+        GameController.instance.Defeat();
     }
 
     private void Fire()
@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         _buttonFire.OnPointerUpAsObservable().Subscribe(_ => _isFire = false);
         _buttonFire.OnPointerDownAsObservable().Subscribe(_ => _isFire = true);
 
-        Observable.IntervalFrame(_weapon.RateOfFire)
+        Observable.IntervalFrame(_weapon.rateOfFire)
             .Where(_ => _isFire && _trEnemy != null)
             .Subscribe(_ => _weapon.Fire());
     }

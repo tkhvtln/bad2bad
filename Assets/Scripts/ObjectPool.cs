@@ -5,24 +5,24 @@ using Object = UnityEngine.Object;
 
 public class ObjectPool<T> where T : MonoBehaviour
 {
-    public T Prefab { get; }
-    public bool AutoExpand { get; set; }
-    public Transform Container { get; }
+    public T prefab { get; }
+    public bool autoExpand { get; set; }
+    public Transform container { get; }
 
-    public List<T> Pool;
+    public List<T> pool;
 
     public ObjectPool(T prefab, int count, Transform container, bool autoExpand)
     {
-        Prefab = prefab;
-        Container = container;
-        AutoExpand = autoExpand;
+        this.prefab = prefab;
+        this.container = container;
+        this.autoExpand = autoExpand;
 
         this.CreatePool(count);
     }
 
     private void CreatePool(int count)
     {
-        Pool = new List<T>();
+        pool = new List<T>();
 
         for (int i = 0; i < count; i++)
             CreateObject();
@@ -30,15 +30,15 @@ public class ObjectPool<T> where T : MonoBehaviour
 
     private T CreateObject(bool isActiveByDefault = false)
     {
-        var createdObject = Object.Instantiate(Prefab, Container);
+        var createdObject = Object.Instantiate(prefab, container);
         createdObject.gameObject.SetActive(isActiveByDefault);
-        Pool.Add(createdObject);
+        pool.Add(createdObject);
         return createdObject;
     }
 
     public bool HasFreeElement(out T element)
     {
-        foreach (var mono in Pool)
+        foreach (var mono in pool)
             if (!mono.gameObject.activeInHierarchy)
             {
                 element = mono;
@@ -55,7 +55,7 @@ public class ObjectPool<T> where T : MonoBehaviour
         if (HasFreeElement(out var element))
             return element;
 
-        if (AutoExpand)
+        if (autoExpand)
             return CreateObject(true);
 
         throw new Exception($"There is no free elements in pool of type {typeof(T)}");

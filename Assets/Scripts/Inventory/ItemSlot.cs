@@ -1,12 +1,12 @@
 [System.Serializable]
 public class ItemSlot 
 {
-    public int ID;
-    public int Count;
+    public int id;
+    public int count;
 
     public ItemSlot(ItemConfig itemConfig)
     {
-        ID = itemConfig.ID;
-        Count = itemConfig.Count;
+        id = itemConfig.ID;
+        count = itemConfig.Count;
     }
 }

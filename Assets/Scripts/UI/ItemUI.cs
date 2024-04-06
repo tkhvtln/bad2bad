@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ItemUI : MonoBehaviour
 {
-    public static UnityEvent<int, bool> OnSelect = new UnityEvent<int, bool>();
+    public static UnityEvent<int, bool> onSelect = new UnityEvent<int, bool>();
 
     public ItemSlot ItemSlot { get; set; }
 
@@ -18,7 +18,7 @@ public class ItemUI : MonoBehaviour
         ItemSlot = itemSlot;
 
         //_icon.sprite = itemSlot.Icon;
-        _count.text = $"{itemSlot.ID}/{itemSlot.Count}";
+        _count.text = $"{itemSlot.id}/{itemSlot.count}";
     }
 
     public void Clear()
@@ -39,7 +39,7 @@ public class ItemUI : MonoBehaviour
 
     public void OnButtonSelect()
     {
-        OnSelect?.Invoke(transform.GetSiblingIndex(), ItemSlot != null);
+        onSelect?.Invoke(transform.GetSiblingIndex(), ItemSlot != null);
         Select();
     }
 }
