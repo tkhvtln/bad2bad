@@ -9,6 +9,9 @@ public class WeaponConfig : ScriptableObject
     [Min(0)] 
     public float Scatter;
 
+    [Min(0)]
+    public int Clip;
+
     [Space]
     public BulletConfig BulletData;
 }

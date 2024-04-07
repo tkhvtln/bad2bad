@@ -18,7 +18,9 @@ public class ItemUI : MonoBehaviour
         ItemSlot = itemSlot;
 
         _icon.sprite = SpriteData.ToSprite(itemSlot.icon);
-        _count.text = $"{itemSlot.count}";
+
+        string count = itemSlot.count <= 1 ? "" : $"{itemSlot.count}";
+        _count.text = $"{count}";
     }
 
     public void Clear()
