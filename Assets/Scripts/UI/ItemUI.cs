@@ -18,6 +18,7 @@ public class ItemUI : MonoBehaviour
         ItemSlot = itemSlot;
 
         _icon.sprite = SpriteData.ToSprite(itemSlot.icon);
+        _icon.rectTransform.sizeDelta = new Vector2(_icon.sprite.rect.width * 5, _icon.sprite.rect.height * 5);
 
         string count = itemSlot.count <= 1 ? "" : $"{itemSlot.count}";
         _count.text = $"{count}";
