@@ -16,7 +16,7 @@ MonoBehaviour:
   Damage: 10
   SpeedMove: 2
   RadiusDetect: 10
-  RadiusAttack: 1
+  RadiusAttack: 1.5
   ItemList:
   - {fileID: 714878425924389727, guid: 31da34fd0edea874cbd33cb2b8011294, type: 3}
   - {fileID: 6411408385633506909, guid: 9d418a3ed5506ad4d909992fef939ba9, type: 3}

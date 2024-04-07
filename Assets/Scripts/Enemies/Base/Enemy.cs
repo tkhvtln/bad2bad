@@ -1,7 +1,7 @@
 using UniRx;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public abstract class Enemy : MonoBehaviour, IDamageable
 {
@@ -24,9 +24,12 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     protected int _animAttack;
 
     protected float _offsetDistance;
+    protected float _distanceToTarget;
 
     protected Item _item;
     protected Animator _animator;
+    protected NavMeshAgent _agent;
+
     protected Behavior _behavior;
     
     protected IntReactiveProperty _countEnemies;
@@ -40,6 +43,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         Detect();
 
         if (_trTarget == null) return;
+
+        _distanceToTarget = Vector2.Distance(_transform.position, _trTarget.position);
 
         Move();
         Look();
@@ -66,6 +71,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _countEnemies = countEnemies;
 
         _particleBlood.gameObject.SetActive(false);
+
+        _agent = GetComponent<NavMeshAgent>(); 
+        _agent.updateUpAxis = false;
+        _agent.updateRotation = false;
 
         _animator = GetComponent<Animator>();
         _animIdle = Animator.StringToHash(Constants.ANIM_IDLE);
@@ -119,38 +128,39 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
             if (colliderTarget != null)
             {
+                _agent.speed = _enemyConfig.SpeedMove;
                 _trTarget = colliderTarget.transform;
                 _iDamagable = _trTarget.GetComponent<IDamageable>();
             }
         }
+        else
 
-        if (_trTarget != null && (Vector2.Distance(_transform.position, _trTarget.position) > _enemyConfig.RadiusDetect))
+        if (_trTarget != null && (_distanceToTarget > _enemyConfig.RadiusDetect))
         {
+            _agent.speed = 0;
             _trTarget = null;
             _iDamagable = null;
-
+            
             SetAnimation(Behavior.IDLE);
         }
     }
 
     private void Move()
     {
-        bool isMinDistance = Vector2.Distance(_transform.position, _trTarget.position) < _enemyConfig.RadiusAttack + _offsetDistance;
-        bool isMaxDistance = Vector2.Distance(_transform.position, _trTarget.position) > _enemyConfig.RadiusDetect;
+        bool isMinDistance = _distanceToTarget < _enemyConfig.RadiusAttack + _offsetDistance;
+        bool isMaxDistance = _distanceToTarget > _enemyConfig.RadiusDetect;
 
         if (isMinDistance || isMaxDistance) return;
 
-        Vector3 vecTarget = (_transform.position - _trTarget.position).normalized;
-        _transform.position -= vecTarget * _enemyConfig.SpeedMove * Time.deltaTime;
-
+        _agent.SetDestination(_trTarget.position);
         _offsetDistance = 0;
+
         SetAnimation(Behavior.WALK);
     }
 
     protected void Attack()
-    {    
-        bool isMinDistance = Vector2.Distance(_transform.position, _trTarget.position) > _enemyConfig.RadiusAttack;
-        
+    {
+        bool isMinDistance = _distanceToTarget > _enemyConfig.RadiusAttack;
         if (isMinDistance) return;
 
         _offsetDistance = 0.1f;
