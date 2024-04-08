@@ -54,18 +54,18 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusAttack);
+        Gizmos.DrawWireSphere(transform.position, _enemyConfig.radiusAttack);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _enemyConfig.RadiusDetect);
+        Gizmos.DrawWireSphere(transform.position, _enemyConfig.radiusDetect);
     }
 
     public void Init(IntReactiveProperty countEnemies)
     {
         _isFaceLeft = false;
 
-        _health = _enemyConfig.Health;
-        _damage = _enemyConfig.Damage;
+        _health = _enemyConfig.health;
+        _damage = _enemyConfig.damage;
 
         _transform = transform;
         _countEnemies = countEnemies;
@@ -81,8 +81,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _animWalk = Animator.StringToHash(Constants.ANIM_WALK);
         _animAttack = Animator.StringToHash(Constants.ANIM_ATTACK);
 
-        int itemIndex = Random.Range(0, _enemyConfig.ItemList.Count);
-        _item = Instantiate(_enemyConfig.ItemList[itemIndex], _transform);
+        int itemIndex = Random.Range(0, _enemyConfig.itemList.Count);
+        _item = Instantiate(_enemyConfig.itemList[itemIndex], _transform);
         _item.gameObject.SetActive(false);
 
         GameController.onCompleted.AddListener(() =>
@@ -95,7 +95,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     public void MakeDamage()
     {
         if (_iDamagable != null) 
-            _iDamagable.TakeDamage(_enemyConfig.Damage);
+            _iDamagable.TakeDamage(_enemyConfig.damage);
     }
 
     public void TakeDamage(int damage)
@@ -124,18 +124,18 @@ public abstract class Enemy : MonoBehaviour, IDamageable
     {
         if (_trTarget == null)
         {
-            Collider2D colliderTarget = Physics2D.OverlapCircle(_transform.position, _enemyConfig.RadiusDetect, LayerMask.GetMask(Constants.LAYER_PLAYER));
+            Collider2D colliderTarget = Physics2D.OverlapCircle(_transform.position, _enemyConfig.radiusDetect, LayerMask.GetMask(Constants.LAYER_PLAYER));
 
             if (colliderTarget != null)
             {
-                _agent.speed = _enemyConfig.SpeedMove;
+                _agent.speed = _enemyConfig.speedMove;
                 _trTarget = colliderTarget.transform;
                 _iDamagable = _trTarget.GetComponent<IDamageable>();
             }
         }
         else
 
-        if (_trTarget != null && (_distanceToTarget > _enemyConfig.RadiusDetect))
+        if (_trTarget != null && (_distanceToTarget > _enemyConfig.radiusDetect))
         {
             _agent.speed = 0;
             _trTarget = null;
@@ -147,8 +147,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     private void Move()
     {
-        bool isMinDistance = _distanceToTarget < _enemyConfig.RadiusAttack + _offsetDistance;
-        bool isMaxDistance = _distanceToTarget > _enemyConfig.RadiusDetect;
+        bool isMinDistance = _distanceToTarget < _enemyConfig.radiusAttack + _offsetDistance;
+        bool isMaxDistance = _distanceToTarget > _enemyConfig.radiusDetect;
 
         if (isMinDistance || isMaxDistance) return;
 
@@ -160,7 +160,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
     protected void Attack()
     {
-        bool isMinDistance = _distanceToTarget > _enemyConfig.RadiusAttack;
+        bool isMinDistance = _distanceToTarget > _enemyConfig.radiusAttack;
         if (isMinDistance) return;
 
         _offsetDistance = 0.1f;

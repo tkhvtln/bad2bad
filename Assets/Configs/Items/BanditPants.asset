@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb2627a56e3c4d4184a0ba2b0c8f25b, type: 3}
   m_Name: BanditPants
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: 57b93224f592cd64b8998d0943a19298, type: 3}
-  Amount: 1
+  icon: {fileID: 21300000, guid: 57b93224f592cd64b8998d0943a19298, type: 3}
+  title: Bandit Pants
+  count: 1

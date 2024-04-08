@@ -17,11 +17,11 @@ public class Inventory : MonoBehaviour
         {
             item.Collect();
 
-            int indexItem = _itemSlots.FindIndex(x => x.id == item.Config.ID);
+            int indexItem = _itemSlots.FindIndex(x => x.title == item.config.title);
             if (indexItem > -1)
                 _itemSlots[indexItem].count++;
             else
-                _itemSlots.Add(new ItemSlot(item.Config));
+                _itemSlots.Add(new ItemSlot(item.config));
 
             _data.itemSlots = _itemSlots;
             SaveSystem.Save(GameController.instance.data);

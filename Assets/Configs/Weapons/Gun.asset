@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129b2ce01b23adf4980a04484f801991, type: 3}
   m_Name: Gun
   m_EditorClassIdentifier: 
-  RateOfFire: 50
-  Scatter: 5
-  Clip: 100
-  BulletData: {fileID: 11400000, guid: 49cca943d74cce041b0e9e4af8f22921, type: 2}
+  rateOfFire: 50
+  scatter: 5
+  clip: 100
+  bulletData: {fileID: 11400000, guid: 49cca943d74cce041b0e9e4af8f22921, type: 2}

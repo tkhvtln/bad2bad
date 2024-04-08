@@ -4,14 +4,14 @@ using UnityEngine;
 public class WeaponConfig : ScriptableObject
 {
     [Min(0), Tooltip("Interval between frames")] 
-    public int RateOfFire;
+    public int rateOfFire;
 
     [Min(0)] 
-    public float Scatter;
+    public float scatter;
 
     [Min(0)]
-    public int Clip;
+    public int clip;
 
     [Space]
-    public BulletConfig BulletData;
+    public BulletConfig bulletData;
 }

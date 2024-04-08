@@ -18,6 +18,7 @@ public static class SaveSystem
     public static Data Load()
     {
         string path = Application.persistentDataPath + "/data.save";
+        //Debug.Log(path);
 
         if (File.Exists(path)) 
         {

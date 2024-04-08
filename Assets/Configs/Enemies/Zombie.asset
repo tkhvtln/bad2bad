@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f5ec42bf35c6b439c9deac6b64782d, type: 3}
   m_Name: Zombie
   m_EditorClassIdentifier: 
-  Health: 100
-  Damage: 10
-  SpeedMove: 2
-  RadiusDetect: 10
-  RadiusAttack: 1.5
-  ItemList:
+  health: 100
+  damage: 10
+  speedMove: 2
+  radiusDetect: 10
+  radiusAttack: 1.5
+  itemList:
   - {fileID: 714878425924389727, guid: 31da34fd0edea874cbd33cb2b8011294, type: 3}
   - {fileID: 6411408385633506909, guid: 9d418a3ed5506ad4d909992fef939ba9, type: 3}
   - {fileID: -3493192133513075086, guid: d3f19d5dc788150499a931214f543dc2, type: 3}

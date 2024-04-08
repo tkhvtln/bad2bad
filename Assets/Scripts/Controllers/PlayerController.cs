@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         _transform = transform;
         _rb = GetComponent<Rigidbody2D>();
-        _trsRadiusAttack.localScale = Vector2.one * _playerConfig.RadiusAttack / 3;
+        _trsRadiusAttack.localScale = Vector2.one * _playerConfig.radiusAttack / 3;
 
         _animator = GetComponent<Animator>();
         _animIdle = Animator.StringToHash(Constants.ANIM_IDLE);
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void ResetPlayer()
     {
         _isFire = false;
-        _health = _playerConfig.Health;
+        _health = _playerConfig.health;
         _sliderHealth.value = 1;
 
         _transform.position = Vector2.zero;
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void Move()
     {
         _vecInput = new Vector2(_joystick.Horizontal, _joystick.Vertical);
-        _rb.velocity = _vecInput * _playerConfig.SpeedMove * Time.fixedDeltaTime;
+        _rb.velocity = _vecInput * _playerConfig.speedMove * Time.fixedDeltaTime;
 
         if (_vecInput != Vector3.zero)  
             SetAnimation(Behavior.WALK);
@@ -183,13 +183,13 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (_trEnemy == null)
         {
-            Collider2D[] colliderTargets = Physics2D.OverlapCircleAll(_trsRadiusAttack.position, _playerConfig.RadiusAttack, LayerMask.GetMask(Constants.LAYER_ENEMY));
+            Collider2D[] colliderTargets = Physics2D.OverlapCircleAll(_trsRadiusAttack.position, _playerConfig.radiusAttack, LayerMask.GetMask(Constants.LAYER_ENEMY));
 
             if (colliderTargets.Length > 0 && colliderTargets[0].gameObject.activeSelf)
                 _trEnemy = colliderTargets[0].transform;
         }
 
-        if (_trEnemy != null && (Vector2.Distance(_trsRadiusAttack.position, _trEnemy.position) > _playerConfig.RadiusAttack || !_trEnemy.gameObject.activeSelf))
+        if (_trEnemy != null && (Vector2.Distance(_trsRadiusAttack.position, _trEnemy.position) > _playerConfig.radiusAttack || !_trEnemy.gameObject.activeSelf))
             _trEnemy = null;
     }
 

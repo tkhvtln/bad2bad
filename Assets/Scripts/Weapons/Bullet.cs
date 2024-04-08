@@ -33,9 +33,9 @@ public class Bullet : MonoBehaviour
         Observable.EveryUpdate()
             .Subscribe(_ =>
             {
-                _transform.Translate(Vector2.right * Time.deltaTime * _bulletConfig.Speed);
+                _transform.Translate(Vector2.right * Time.deltaTime * _bulletConfig.speed);
 
-                if (Vector3.Distance(_transform.position, _trSpawner.position) > _bulletConfig.Distance)
+                if (Vector3.Distance(_transform.position, _trSpawner.position) > _bulletConfig.distance)
                 {
                     _disposable.Dispose();
                     gameObject.SetActive(false);
@@ -46,7 +46,7 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out IDamageable damageable))
-            damageable.TakeDamage(_bulletConfig.Damage);
+            damageable.TakeDamage(_bulletConfig.damage);
             
         _disposable?.Dispose();
         gameObject.SetActive(false); 

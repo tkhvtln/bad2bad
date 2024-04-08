@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Item : MonoBehaviour, ICollectable
 {
-    public ItemConfig Config => _itemConfig;
+    public ItemConfig config => _itemConfig;
 
     [SerializeField] private ItemConfig _itemConfig;
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d478c66569432244fb436a44aeb791a6, type: 3}
   m_Name: Bullet
   m_EditorClassIdentifier: 
-  Damage: 10
-  Speed: 10
-  Distance: 10
-  BulletPrefab: {fileID: 5396899613023526337, guid: 7604e2abb7c93e540b922fc3a30ae082, type: 3}
+  damage: 10
+  speed: 10
+  distance: 10
+  bulletPrefab: {fileID: 5396899613023526337, guid: 7604e2abb7c93e540b922fc3a30ae082, type: 3}

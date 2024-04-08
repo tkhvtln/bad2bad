@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb2627a56e3c4d4184a0ba2b0c8f25b, type: 3}
   m_Name: BulletproofCloakWrist
   m_EditorClassIdentifier: 
-  Icon: {fileID: 21300000, guid: d600aafa82fce564aace99c7b1556caa, type: 3}
-  ID: 3
-  Count: 1
+  icon: {fileID: 21300000, guid: 75b8e56e45a51e5458aaff1617d960a7, type: 3}
+  title: Bulletproof Cloak Elbow
+  count: 1
