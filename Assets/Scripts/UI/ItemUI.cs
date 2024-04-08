@@ -17,6 +17,8 @@ public class ItemUI : MonoBehaviour
     {
         ItemSlot = itemSlot;
 
+        _icon.gameObject.SetActive(true);
+
         _icon.sprite = SpriteData.ToSprite(itemSlot.icon);
         _icon.rectTransform.sizeDelta = new Vector2(_icon.sprite.rect.width * 5, _icon.sprite.rect.height * 5);
 
@@ -26,6 +28,8 @@ public class ItemUI : MonoBehaviour
 
     public void Clear()
     {
+        _icon.gameObject.SetActive(false);
+
         _icon.sprite = null;
         _count.text = "";
     }
