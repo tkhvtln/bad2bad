@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 3
+    serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    buildHeightMesh: 0
+    accuratePlacement: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -128,7 +128,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 766217546}
     m_Modifications:
     - target: {fileID: 2333294212865746378, guid: a6355f35793aaea43ba0d7d335e56190, type: 3}
@@ -180,9 +179,6 @@ PrefabInstance:
       value: Cockroach
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6355f35793aaea43ba0d7d335e56190, type: 3}
 --- !u!4 &22806793 stripped
 Transform:
@@ -347,7 +343,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512190812}
-  m_RootOrder: -1
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &640454106
 TilemapRenderer:
@@ -1382,32 +1378,12 @@ TilemapCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
-  m_UseDelaunayMesh: 0
 --- !u!114 &640454109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1452,9 +1428,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1613994729}
   - {fileID: 905382237}
   - {fileID: 22806793}
-  - {fileID: 1613994729}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1468,7 +1444,6 @@ GameObject:
   m_Component:
   - component: {fileID: 901561217}
   - component: {fileID: 901561216}
-  - component: {fileID: 901561218}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1553,35 +1528,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &901561218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 901561215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
 --- !u!1001 &905382236
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 766217546}
     m_Modifications:
     - target: {fileID: 75662619323922909, guid: 194ed22cb5878b845a4662ac4b7326af, type: 3}
@@ -1622,7 +1573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6149961640986701185, guid: 194ed22cb5878b845a4662ac4b7326af, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.00000943383
+      value: 0.000009441281
       objectReference: {fileID: 0}
     - target: {fileID: 6398235346867276278, guid: 194ed22cb5878b845a4662ac4b7326af, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1634,7 +1585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6647098656001702535, guid: 194ed22cb5878b845a4662ac4b7326af, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.08395678
+      value: 0.08395677
       objectReference: {fileID: 0}
     - target: {fileID: 6647098656001702535, guid: 194ed22cb5878b845a4662ac4b7326af, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1693,9 +1644,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 194ed22cb5878b845a4662ac4b7326af, type: 3}
 --- !u!4 &905382237 stripped
 Transform:
@@ -1734,7 +1682,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512190812}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!483693784 &1009146148
 TilemapRenderer:
@@ -9552,7 +9500,6 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 766217546}
     m_Modifications:
     - target: {fileID: 1479816002430008929, guid: a6355f35793aaea43ba0d7d335e56190, type: 3}
@@ -9612,9 +9559,6 @@ PrefabInstance:
       value: Cockroach (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6355f35793aaea43ba0d7d335e56190, type: 3}
 --- !u!4 &1613994729 stripped
 Transform:
