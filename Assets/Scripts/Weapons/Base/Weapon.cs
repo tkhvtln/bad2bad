@@ -14,7 +14,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected ObjectPool<Bullet> _objectPool;
 
-    public void Init()
+    public virtual void Init()
     {
         _clip = _weaponConfig.clip;
         onFire?.Invoke(_clip);
@@ -24,7 +24,7 @@ public abstract class Weapon : MonoBehaviour
             bullet.Init();
     }
 
-    public void Fire() 
+    public virtual void Fire() 
     {
         if (_clip <= 0) return;
 

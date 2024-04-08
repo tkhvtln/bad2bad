@@ -60,7 +60,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         Gizmos.DrawWireSphere(transform.position, _enemyConfig.radiusDetect);
     }
 
-    public void Init(IntReactiveProperty countEnemies)
+    public virtual void Init(IntReactiveProperty countEnemies)
     {
         _isFaceLeft = false;
 
@@ -92,13 +92,13 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         });
     }
 
-    public void MakeDamage()
+    public virtual void MakeDamage()
     {
         if (_iDamagable != null) 
             _iDamagable.TakeDamage(_enemyConfig.damage);
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         _health -= damage;
         _sliderHealth.value = _health * 0.01f;
@@ -120,7 +120,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         gameObject.SetActive(false);
     }
 
-    private void Detect()
+    protected virtual void Detect()
     {
         if (_trTarget == null)
         {
@@ -145,7 +145,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         }
     }
 
-    private void Move()
+    protected virtual void Move()
     {
         bool isMinDistance = _distanceToTarget < _enemyConfig.radiusAttack + _offsetDistance;
         bool isMaxDistance = _distanceToTarget > _enemyConfig.radiusDetect;
@@ -158,7 +158,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         SetAnimation(Behavior.WALK);
     }
 
-    protected void Attack()
+    protected virtual void Attack()
     {
         bool isMinDistance = _distanceToTarget > _enemyConfig.radiusAttack;
         if (isMinDistance) return;
@@ -167,7 +167,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         SetAnimation(Behavior.ATTACK);       
     }
 
-    protected void Look()
+    protected virtual void Look()
     {
         if (_transform.position.x > _trTarget.position.x && !_isFaceLeft)
             Flip();
@@ -175,7 +175,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
             Flip();
     }
 
-    protected void Flip()
+    protected virtual void Flip()
     {
         _transform.Rotate(0, 180, 0);
         _isFaceLeft = !_isFaceLeft;
@@ -183,7 +183,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         _sliderHealth.transform.eulerAngles = Vector2.right;
     }
 
-    private void SetAnimation(Behavior behavior)
+    protected virtual void SetAnimation(Behavior behavior)
     {
         if (_behavior == behavior) return;
 

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   speedMove: 300
-  radiusAttack: 7
+  radiusAttack: 8
