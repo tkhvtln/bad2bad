@@ -73,11 +73,15 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void ResetPlayer()
     {
         _isFire = false;
+        _isFaceLeft = false;
+
         _health = _playerConfig.health;
         _sliderHealth.value = 1;
 
         _transform.position = Vector2.zero;
         _transform.eulerAngles = Vector2.zero;
+
+        _trWeapon.localScale = Vector2.one;
         _trWeapon.eulerAngles = Vector2.zero;
 
         _vecInput = Vector2.zero;
