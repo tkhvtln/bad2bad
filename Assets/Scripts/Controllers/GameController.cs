@@ -13,7 +13,6 @@ public class GameController : MonoBehaviour
     public LevelController ControllerLevel { get; set; }
 
     public UIController uiController;
-    public SaveController saveController;
     public PlayerController playerController;
 
     [Space]
@@ -33,7 +32,6 @@ public class GameController : MonoBehaviour
     {
         data = SaveSystem.Load();
 
-        //saveController.Load();
         uiController.Init();
         playerController.Init();
 
@@ -76,8 +74,6 @@ public class GameController : MonoBehaviour
     {
         UnloadScene();
 
-        //saveController.dataPlayer.Level = ++saveController.dataPlayer.Level >= SceneManager.sceneCountInBuildSettings ? 1 : saveController.dataPlayer.Level;
-        //saveController.Save();
         data.level = ++data.level >= SceneManager.sceneCountInBuildSettings ? 1 : data.level;
         SaveSystem.Save(data);
 
@@ -89,7 +85,6 @@ public class GameController : MonoBehaviour
         if (!_isSceneLoaded)
         {
             _isSceneLoaded = true;
-            //SceneManager.LoadSceneAsync(saveController.dataPlayer.Level, LoadSceneMode.Additive);
             SceneManager.LoadSceneAsync(data.level, LoadSceneMode.Additive);
         }
 
@@ -102,7 +97,6 @@ public class GameController : MonoBehaviour
         if (_isSceneLoaded)
         {
             _isSceneLoaded = false;
-            //SceneManager.UnloadSceneAsync(saveController.dataPlayer.Level);
             SceneManager.UnloadSceneAsync(data.level);
         }
     }
