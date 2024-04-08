@@ -88,11 +88,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         _rb.velocity = Vector2.zero;
         _joystick.ResetJoystick();
 
-        gameObject.SetActive(true);
-
         _particleBlood.transform.parent = _transform;
         _particleBlood.transform.localPosition = Vector2.zero;
         _particleBlood.gameObject.SetActive(false);
+
+        gameObject.SetActive(true);
 
         SetAnimation(Behavior.IDLE);
     }
