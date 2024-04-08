@@ -72,7 +72,8 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
         _particleBlood.gameObject.SetActive(false);
 
-        _agent = GetComponent<NavMeshAgent>(); 
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _enemyConfig.speedMove;
         _agent.updateUpAxis = false;
         _agent.updateRotation = false;
 
@@ -128,7 +129,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
             if (colliderTarget != null)
             {
-                _agent.speed = _enemyConfig.speedMove;
+                _agent.enabled = true;
                 _trTarget = colliderTarget.transform;
                 _iDamagable = _trTarget.GetComponent<IDamageable>();
             }
@@ -137,7 +138,7 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
         if (_trTarget != null && (_distanceToTarget > _enemyConfig.radiusDetect))
         {
-            _agent.speed = 0;
+            _agent.enabled = false;
             _trTarget = null;
             _iDamagable = null;
             
@@ -152,8 +153,10 @@ public abstract class Enemy : MonoBehaviour, IDamageable
 
         if (isMinDistance || isMaxDistance) return;
 
-        _agent.SetDestination(_trTarget.position);
         _offsetDistance = 0;
+
+        _agent.enabled = true;
+        _agent.SetDestination(_trTarget.position);
 
         SetAnimation(Behavior.WALK);
     }
@@ -163,7 +166,9 @@ public abstract class Enemy : MonoBehaviour, IDamageable
         bool isMinDistance = _distanceToTarget > _enemyConfig.radiusAttack;
         if (isMinDistance) return;
 
+        _agent.enabled = false;
         _offsetDistance = 0.1f;
+
         SetAnimation(Behavior.ATTACK);       
     }
 
